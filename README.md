@@ -1,1 +1,1 @@
-# -shumo
+# -Math competition
