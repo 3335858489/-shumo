@@ -1,4 +1,4 @@
-filename = fullfile(getenv('USERPROFILE'), 'Desktop', 't1.csv');
+filename = fullfile(getenv('USERPROFILE'), 'Desktop', 't1.xlsx');
 
 % 使用 readtable 读取数据
 data = readtable(filename);

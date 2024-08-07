@@ -20,16 +20,30 @@ for file_path in csv_files:
     print(f"Processing file: {file_path}")
     
     # 读取 CSV 文件
-    df = pd.read_csv(file_path, encoding='utf-8')
+    try:
+        df = pd.read_csv(file_path, encoding='utf-8')
+    except Exception as e:
+        print(f"Error reading {file_path}: {e}")
+        continue
+    
+    # 打印读取的数据行数
+    print(f"Read {len(df)} rows from {file_path}")
     
     # 选择需要的列（第一列和第七列）
-    selected_columns = df.iloc[:, [0, 6]]
+    try:
+        selected_columns = df.iloc[:, [0, 6]]
+    except IndexError as e:
+        print(f"Error selecting columns from {file_path}: {e}")
+        continue
     
     # 将第七列转换为数值类型，无法转换的设置为NaN
     selected_columns.iloc[:, 1] = pd.to_numeric(selected_columns.iloc[:, 1], errors='coerce')
     
     # 过滤第七列数据，只保留大于等于0的数据
     selected_columns = selected_columns[selected_columns.iloc[:, 1] >= 0]
+    
+    # 打印过滤后的数据行数
+    print(f"Filtered to {len(selected_columns)} rows after removing negative values")
     
     # 提取文件名中的汉字部分
     file_name = os.path.basename(file_path)
